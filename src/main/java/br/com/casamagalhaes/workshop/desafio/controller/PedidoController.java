@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Pedido Venda")
 @RestController
-@RequestMapping(path = "/api/v1/pedidos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/v1/pedidos")
 public class PedidoController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class PedidoController {
 
     @PostMapping({ "/", "" })
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Pedido save(@Valid @RequestBody Pedido pedido) {
+    public Pedido save(@RequestBody Pedido pedido) {
         return service.save(pedido);
     }
 
