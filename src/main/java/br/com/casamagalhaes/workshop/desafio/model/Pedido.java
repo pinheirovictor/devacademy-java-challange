@@ -1,7 +1,6 @@
 package br.com.casamagalhaes.workshop.desafio.model;
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import br.com.casamagalhaes.workshop.desafio.enums.StatusPedido;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import br.com.casamagalhaes.workshop.desafio.enums.StatusDoPedido;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,8 +24,12 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "pedido")
+    @Column(name = "id_pedido")
     private Long id;
+
+    @Column(unique = true)
+    @NotEmpty()
+    private String pedido;
 
     @NotEmpty()
     private String nomeCliente;
@@ -40,16 +41,16 @@ public class Pedido {
     @Size(min = 7, max = 11)
     private String telefone;
 
-    private Double valorTotalProdutos;
+    private Double valorProdutos;
 
     private Double taxa;
 
     private Double valorTotal;
 
-    @JsonIgnore(value = true)
     @Enumerated(EnumType.STRING)
-    private StatusPedido status;
+    private StatusDoPedido status;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ItemDoPedido> itens;
 }
